@@ -1,8 +1,9 @@
 package au.com.thoughtworks.io;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface FileContent {
 
-	List<String> getContents(final String fileName, final int maxSize);
+	Optional<List<String>> getContents(final String fileName);
 }

@@ -4,8 +4,11 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class StringParser implements Parser {
+public class StringParser {
 
+	private static final String EMPTY = "";
+	public static final String DELIM_SPACE = " ";
+	
 	private static final int ONE = 1;
 	private static final int NOT_FOUND = -1;
 
@@ -30,8 +33,7 @@ public class StringParser implements Parser {
 	 * @return last word of the content string or false 
 	 * 			of Optional
 	 */
-	@Override
-	public Optional<String> parseLastWord(String string, String delim) {
+	public static Optional<String> parseLastWord(String string, String delim) {
 		Optional<String> lastWord = Optional.empty(); 
 		
 		if (StringUtils.isNotBlank(string)
@@ -40,10 +42,24 @@ public class StringParser implements Parser {
 			if ((NOT_FOUND != index)
 					&&(index < (string.length() - ONE))) {
 				String last = string.substring(index);
-				lastWord = Optional.of(last.trim());
+				lastWord = Optional.of(last.trim().toLowerCase());
 			}
 		}
 		return lastWord;
 	}
 
+//	public static Function<String, String> lastWordOfSentence(final String string) {
+//		return f -> {
+//			StringParser parser = new StringParser();
+//			Optional<String> result = parser.parseLastWord(string, " ");
+//			String category = result.isPresent() ? result.get() : "";
+//			return category;
+//		};
+//	}
+	
+	public static String lastWordOfSentence(final String string) {
+		Optional<String> result = parseLastWord(string, DELIM_SPACE);
+		String category = result.isPresent() ? result.get() : EMPTY;
+		return category;
+	}
 }

@@ -7,34 +7,19 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Optional;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 // In order to organized the conference
 // As the conference manager
 // I like to extract the time from content
 public class StringParserTest {
-
-	private static final String DELIM = " ";
-	private Parser testInstance;
-	
-	@Before
-	public void setUp() {
-		this.testInstance = new StringParser();
-	}
-	
-	@After
-	public void tearDown() {
-		this.testInstance = null;
-	}
 	
 	@Test
 	public void whenASentenceProvidedThenLastWordShouldReturn() {
 		//Given a sentence
 		String content = "Communicating Over Distance 60min";
 		//When the parseLastWord method called
-		Optional<String> lastWord = testInstance.parseLastWord(content, DELIM);
+		Optional<String> lastWord = StringParser.parseLastWord(content, StringParser.DELIM_SPACE);
 		//Then the last word should return
 		assertNotNull(lastWord);
 		assertTrue(lastWord.isPresent());
@@ -46,7 +31,7 @@ public class StringParserTest {
 		//Given a null sentence
 		String content = null;
 		//When the parseLastWord method called
-		Optional<String> lastWord = testInstance.parseLastWord(content, DELIM);
+		Optional<String> lastWord = StringParser.parseLastWord(content, StringParser.DELIM_SPACE);
 		//Then the last word should NOT return
 		assertNotNull(lastWord);
 		assertFalse(lastWord.isPresent());
@@ -57,7 +42,7 @@ public class StringParserTest {
 		//Given a null sentence
 		String content = "";
 		//When the parseLastWord method called
-		Optional<String> lastWord = testInstance.parseLastWord(content, DELIM);
+		Optional<String> lastWord = StringParser.parseLastWord(content, StringParser.DELIM_SPACE);
 		//Then the last word should NOT return
 		assertNotNull(lastWord);
 		assertFalse(lastWord.isPresent());
@@ -68,7 +53,7 @@ public class StringParserTest {
 		//Given a null sentence
 		String content = " ";
 		//When the parseLastWord method called
-		Optional<String> lastWord = testInstance.parseLastWord(content, DELIM);
+		Optional<String> lastWord = StringParser.parseLastWord(content, StringParser.DELIM_SPACE);
 		//Then the last word should NOT return
 		assertNotNull(lastWord);
 		assertFalse(lastWord.isPresent());
@@ -79,7 +64,7 @@ public class StringParserTest {
 		//Given a null sentence
 		String content = "abc";
 		//When the parseLastWord method called
-		Optional<String> lastWord = testInstance.parseLastWord(content, DELIM);
+		Optional<String> lastWord = StringParser.parseLastWord(content, StringParser.DELIM_SPACE);
 		//Then the last word should NOT return
 		assertNotNull(lastWord);
 		assertFalse(lastWord.isPresent());
@@ -90,7 +75,7 @@ public class StringParserTest {
 		//Given a null sentence
 		String content = "abc";
 		//When the parseLastWord method called
-		Optional<String> lastWord = testInstance.parseLastWord(content, "c");
+		Optional<String> lastWord = StringParser.parseLastWord(content, "c");
 		//Then the last word should NOT return
 		assertNotNull(lastWord);
 		assertFalse(lastWord.isPresent());
@@ -102,7 +87,7 @@ public class StringParserTest {
 		String content = "abc";
 		String delim = null;
 		//When the parseLastWord method called
-		Optional<String> lastWord = testInstance.parseLastWord(content, delim);
+		Optional<String> lastWord = StringParser.parseLastWord(content, delim);
 		//Then the last word should NOT return
 		assertNotNull(lastWord);
 		assertFalse(lastWord.isPresent());
@@ -114,7 +99,7 @@ public class StringParserTest {
 		String content = "abc";
 		String delim = "";
 		//When the parseLastWord method called
-		Optional<String> lastWord = testInstance.parseLastWord(content, delim);
+		Optional<String> lastWord = StringParser.parseLastWord(content, delim);
 		//Then the last word should NOT return
 		assertNotNull(lastWord);
 		assertFalse(lastWord.isPresent());

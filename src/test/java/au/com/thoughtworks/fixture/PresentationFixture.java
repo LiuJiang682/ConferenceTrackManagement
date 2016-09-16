@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class PresentationFixture {
 
@@ -37,11 +38,71 @@ public class PresentationFixture {
 		List<String> lightningList = new ArrayList<>();
 		lightningList.add("Rails for Python Developers lightning");
 		map.put("lightning", lightningList);
-		List<String> thirtyList = new ArrayList<>();
-		thirtyList.add("User Interface CSS in Rails Apps 30min");
+		List<String> thirtyList = getList();
 		thirtyList.add("A World Without HackerNews 30min");
 		map.put("30min", thirtyList);
 		return map;
 	}
 
+	public static Entry<String, List<String>> getMinutesFormateKey() {
+		Map<String, List<String>> map = new HashMap<String, List<String>>();
+		List<String> thirtyList = getList();
+		map.put("30min", thirtyList);
+		return map.entrySet().iterator().next();
+	}
+
+	public static Entry<String, List<String>> get0MinutesFormateKey() {
+		Map<String, List<String>> map = new HashMap<String, List<String>>();
+		List<String> thirtyList = getList();
+		map.put("0min", thirtyList);
+		return map.entrySet().iterator().next();
+	}
+
+	public static Entry<String, List<String>> getNoDigitMinutesFormateKey() {
+		Map<String, List<String>> map = new HashMap<String, List<String>>();
+		List<String> thirtyList = getList();
+		map.put("min", thirtyList);
+		return map.entrySet().iterator().next();
+	}
+
+	private static List<String> getList() {
+		List<String> thirtyList = new ArrayList<>();
+		thirtyList.add("User Interface CSS in Rails Apps 30min");
+		return thirtyList;
+	}
+
+	public static Entry<String, List<String>> get999MinutesFormateKey() {
+		Map<String, List<String>> map = new HashMap<String, List<String>>();
+		List<String> thirtyList = getList();
+		map.put("999min", thirtyList);
+		return map.entrySet().iterator().next();
+	}
+
+	public static Entry<String, List<String>> get1000MinutesFormateKey() {
+		Map<String, List<String>> map = new HashMap<String, List<String>>();
+		List<String> thirtyList = getList();
+		map.put("1000min", thirtyList);
+		return map.entrySet().iterator().next();
+	}
+
+	public static Entry<String, List<String>> getLeadSpace10MinutesFormateKey() {
+		Map<String, List<String>> map = new HashMap<String, List<String>>();
+		List<String> thirtyList = getList();
+		map.put(" 10min", thirtyList);
+		return map.entrySet().iterator().next();
+	}
+
+	public static Entry<String, List<String>> getTailSpace10MinutesFormateKey() {
+		Map<String, List<String>> map = new HashMap<String, List<String>>();
+		List<String> thirtyList = getList();
+		map.put("10min ", thirtyList);
+		return map.entrySet().iterator().next();
+	}
+
+	public static Entry<String, List<String>> getLeadTailSpace10MinutesFormateKey() {
+		Map<String, List<String>> map = new HashMap<String, List<String>>();
+		List<String> thirtyList = getList();
+		map.put(" 10min ", thirtyList);
+		return map.entrySet().iterator().next();
+	}
 }

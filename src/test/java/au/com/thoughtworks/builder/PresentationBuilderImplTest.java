@@ -2,6 +2,7 @@ package au.com.thoughtworks.builder;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 import java.util.Map;
@@ -64,5 +65,85 @@ public class PresentationBuilderImplTest {
 		assertNotNull(allTimeCategories);
 		assertFalse(allTimeCategories.isEmpty());
 		assertFalse(allTimeCategories.containsKey("lightning"));
+	}
+	
+	@Test
+	public void whenCorrectMinutesFormatKeyProvidedThenTrueShouldReturn() {
+		//Given the minute format key
+		Map.Entry<String, List<String>> e = PresentationFixture.getMinutesFormateKey();
+		//When the isMinuteFormat predicate called
+		boolean flag = PresentationBuilderImpl.isMinutesFormat().test(e);
+		//Then true should be return
+		assertTrue(flag);
+	}
+	
+	@Test
+	public void when0MinutesFormatKeyProvidedThenTrueShouldReturn() {
+		//Given the minute format key
+		Map.Entry<String, List<String>> e = PresentationFixture.get0MinutesFormateKey();
+		//When the isMinuteFormat predicate called
+		boolean flag = PresentationBuilderImpl.isMinutesFormat().test(e);
+		//Then true should be return
+		assertTrue(flag);
+	}
+	
+	@Test
+	public void when999MinutesFormatKeyProvidedThenTrueShouldReturn() {
+		//Given the minute format key
+		Map.Entry<String, List<String>> e = PresentationFixture.get999MinutesFormateKey();
+		//When the isMinuteFormat predicate called
+		boolean flag = PresentationBuilderImpl.isMinutesFormat().test(e);
+		//Then true should be return
+		assertTrue(flag);
+	}
+	
+	@Test
+	public void whenMinutesFormatKeyProvidedThenFalseShouldReturn() {
+		//Given the minute format key
+		Map.Entry<String, List<String>> e = PresentationFixture.getNoDigitMinutesFormateKey();
+		//When the isMinuteFormat predicate called
+		boolean flag = PresentationBuilderImpl.isMinutesFormat().test(e);
+		//Then true should be return
+		assertFalse(flag);
+	}
+	
+	@Test
+	public void when1000MinutesFormatKeyProvidedThenFalseShouldReturn() {
+		//Given the minute format key
+		Map.Entry<String, List<String>> e = PresentationFixture.get1000MinutesFormateKey();
+		//When the isMinuteFormat predicate called
+		boolean flag = PresentationBuilderImpl.isMinutesFormat().test(e);
+		//Then true should be return
+		assertFalse(flag);
+	}
+	
+	@Test
+	public void whenLeadSpace10MinutesFormatKeyProvidedThenFalseShouldReturn() {
+		//Given the minute format key
+		Map.Entry<String, List<String>> e = PresentationFixture.getLeadSpace10MinutesFormateKey();
+		//When the isMinuteFormat predicate called
+		boolean flag = PresentationBuilderImpl.isMinutesFormat().test(e);
+		//Then true should be return
+		assertFalse(flag);
+	}
+	
+	@Test
+	public void whenTailSpace10MinutesFormatKeyProvidedThenFalseShouldReturn() {
+		//Given the minute format key
+		Map.Entry<String, List<String>> e = PresentationFixture.getTailSpace10MinutesFormateKey();
+		//When the isMinuteFormat predicate called
+		boolean flag = PresentationBuilderImpl.isMinutesFormat().test(e);
+		//Then true should be return
+		assertFalse(flag);
+	}
+	
+	@Test
+	public void whenLeadTailSpace10MinutesFormatKeyProvidedThenFalseShouldReturn() {
+		//Given the minute format key
+		Map.Entry<String, List<String>> e = PresentationFixture.getLeadTailSpace10MinutesFormateKey();
+		//When the isMinuteFormat predicate called
+		boolean flag = PresentationBuilderImpl.isMinutesFormat().test(e);
+		//Then true should be return
+		assertFalse(flag);
 	}
 }

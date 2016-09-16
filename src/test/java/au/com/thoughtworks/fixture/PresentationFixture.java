@@ -105,4 +105,10 @@ public class PresentationFixture {
 		map.put(" 10min ", thirtyList);
 		return map.entrySet().iterator().next();
 	}
+
+	public static List<String> getMixTitleList() {
+		List<String> list = new ArrayList<>(getTitleList());
+		list.add("F# ABC");
+		return list;
+	}
 }

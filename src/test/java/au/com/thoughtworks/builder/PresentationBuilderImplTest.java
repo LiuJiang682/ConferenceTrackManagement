@@ -68,6 +68,20 @@ public class PresentationBuilderImplTest {
 	}
 	
 	@Test
+	public void whenMixTitleProvidedThenBuilderShouldFilterOUt() {
+		//Given a presentation title list
+		List<String> presentations = PresentationFixture.getMixTitleList();
+		//When the buildPresentationCategories method called
+		SortedMap<String, List<String>> timeCategories = testInstance.buildPresentationCategories(presentations);
+		//Then the all invalid key have been filter out
+		assertNotNull(timeCategories);
+		assertFalse(timeCategories.isEmpty());
+		assertFalse(timeCategories.containsKey("lightning"));
+		assertFalse(timeCategories.containsKey("abc"));
+		assertTrue(4 == timeCategories.size());
+	}
+	
+	@Test
 	public void whenCorrectMinutesFormatKeyProvidedThenTrueShouldReturn() {
 		//Given the minute format key
 		Map.Entry<String, List<String>> e = PresentationFixture.getMinutesFormateKey();

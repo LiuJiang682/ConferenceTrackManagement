@@ -6,6 +6,8 @@ import au.com.thoughtworks.constants.Constants.Strings;
 
 public class TimeCalculator {
 
+	private static final String TIME_FORMAT = "%02d:%02d";
+	private static final String COLON = ":";
 	private static final int ONE = 1;
 	private static final int ZERO = 0;
 	private static final int TWO = 2;
@@ -25,7 +27,7 @@ public class TimeCalculator {
 	public static String newTime(String currentTime, Integer delta) {
 		String ampm = currentTime.substring(currentTime.length() - TWO);
 		String digits = currentTime.replace(ampm, Strings.EMPTY);
-		String[] hourAndMinuts = digits.split(":");
+		String[] hourAndMinuts = digits.split(COLON);
 		
 		BigDecimal presentationTime = new BigDecimal(delta);
 		BigDecimal[] presentationHoursAndMinuts = presentationTime.divideAndRemainder(SIXTY); 
@@ -37,7 +39,7 @@ public class TimeCalculator {
 			newHour = newHour.add(BigDecimal.ONE);
 			newMinute = realMinute;
 		}
-		String newTimeString = String.format("%02d:%02d", newHour.intValue(), newMinute.intValue());
+		String newTimeString = String.format(TIME_FORMAT, newHour.intValue(), newMinute.intValue());
 		return newTimeString + ampm;
 	}
 

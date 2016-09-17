@@ -82,7 +82,7 @@ public class AfternoonSessionTest {
 		// Then all attributes should updated
 		assertTrue(105 == this.testInstance.getAvailableTime());
 		assertTrue(45 == this.testInstance.getMinimumTime());
-		assertTrue(this.testInstance.isNextTalkShort());
+		assertFalse(this.testInstance.isNextTalkShort());
 		assertEquals(
 				"01:00PM How to install Kali in full encryted partition 60min" + SessionBase.DELIM
 						+ "02:00PM AngularJS custom directive 45min" + SessionBase.DELIM

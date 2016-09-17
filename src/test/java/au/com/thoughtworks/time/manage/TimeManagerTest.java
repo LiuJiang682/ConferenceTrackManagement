@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import java.util.List;
 import java.util.SortedMap;
 
+import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -22,6 +23,8 @@ import au.com.thoughtworks.fixture.PresentationFixture;
  */
 public class TimeManagerTest {
 
+	private static final Logger LOGGER = Logger.getLogger(TimeManagerTest.class);
+	
 	private TimeManager testInstance;
 	
 	@Before
@@ -34,15 +37,18 @@ public class TimeManagerTest {
 		this.testInstance = null;
 	}
 	
-	@Ignore
+	
 	@Test
 	public void whenPresentTimeCategoriesProvidedThenConferenceShouldArranged() {
 		//Given the sorted time categories
 		SortedMap<Integer, List<String>> timeCategories = PresentationFixture.getTimeCategories();
 		//When the arrange method called
-		List<String> conferencePrograms = testInstance.arrange(timeCategories);
+		List<String> conferencePrograms = testInstance.arrange(timeCategories, 16);
 		//Then the conference should be arranged
 		assertNotNull(conferencePrograms);
 		assertFalse(conferencePrograms.isEmpty());
+		for (String string : conferencePrograms) {
+			LOGGER.debug(string);
+		}
 	}
 }

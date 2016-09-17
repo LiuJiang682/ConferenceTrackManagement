@@ -31,6 +31,9 @@ public class MorningSession extends SessionBase {
 		if (SessionBase.SHORT_PRESENTATION_TIME < time) {
 			this.nextTalkShort = true;
 		}
+		else {
+			this.nextTalkShort = false;
+		}
 		this.presentations.add(this.programTime + Strings.SPACE + title);
 		this.programTime = TimeCalculator.newTime(this.programTime, time);
 	}

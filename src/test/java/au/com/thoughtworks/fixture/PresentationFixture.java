@@ -142,7 +142,6 @@ public class PresentationFixture {
 				"Woah 30min",
 				"Sit Down and Write 30min",
 				"Programming in the Boondocks of Seattle 30min",
-				"Programming in the Boondocks of Seattle 30min",
 				"Ruby vs. Clojure for Back-End Development 30min",
 				"A World Without HackerNews 30min",
 				"User Interface CSS in Rails Apps 30min"

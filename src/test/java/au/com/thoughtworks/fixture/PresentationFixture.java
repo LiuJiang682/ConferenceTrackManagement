@@ -124,4 +124,46 @@ public class PresentationFixture {
 		map.put("30min", thirtyList);
 		return new TreeMap<>(map);
 	}
+
+	public static SortedMap<Integer, List<String>> getTimeCategories() {
+		TreeMap<Integer, List<String>> timeCategories = new TreeMap<>();
+		List<String> sixty = getSixtyList();
+		timeCategories.put(60, sixty);
+		List<String> fourtyFive = getFourtyFiveList();
+		timeCategories.put(45, fourtyFive);
+		List<String> thirty = getThirty();
+		timeCategories.put(30, thirty);
+		return timeCategories;
+	}
+
+	public static List<String> getThirty() {
+		return Arrays.asList(
+				"Lua for the Masses 30min",
+				"Woah 30min",
+				"Sit Down and Write 30min",
+				"Programming in the Boondocks of Seattle 30min",
+				"Programming in the Boondocks of Seattle 30min",
+				"Ruby vs. Clojure for Back-End Development 30min",
+				"A World Without HackerNews 30min",
+				"User Interface CSS in Rails Apps 30min"
+		);
+	}
+
+	public static List<String> getFourtyFiveList() {
+		return Arrays.asList("Overdoing it in Python 45min",
+				"Ruby Errors from Mismatched Gem Versions 45min",
+				"Common Ruby Errors 45min",
+				"Accounting-Driven Development 45min",
+				"Pair Programming vs Noise 45min",
+				"Clojure Ate Scala (on my project) 45min"
+		);
+	}
+
+	public static List<String> getSixtyList() {
+		return Arrays.asList("Writing Fast Tests Against Enterprise Rails 60min", 
+				"Communicating Over Distance 60min",
+				"Rails Magic 60min",
+				"Ruby on Rails Legacy App Maintenance 60min"
+				);
+	}
 }

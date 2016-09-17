@@ -12,13 +12,13 @@ import org.junit.Test;
 
 import au.com.thoughtworks.constants.Constants;
 
-public class MorningSessionTest {
+public class AfternoonSessionTest {
 
-	private MorningSession testInstance;
+	private AfternoonSession testInstance;
 
 	@Before
 	public void setUp() {
-		this.testInstance = new MorningSession();
+		this.testInstance = new AfternoonSession();
 	}
 
 	@After
@@ -44,7 +44,7 @@ public class MorningSessionTest {
 		// Then all attributes should updated
 		assertTime120Minutes();
 		assertTrue(this.testInstance.isNextTalkShort());
-		assertEquals("09:00AM How to install Kali in full encryted partition 60min" + SessionBase.DELIM,
+		assertEquals("01:00PM How to install Kali in full encryted partition 60min" + SessionBase.DELIM,
 				this.testInstance.getProgramDetails());
 	}
 
@@ -57,7 +57,7 @@ public class MorningSessionTest {
 		this.testInstance.addNextTalk(time, title);
 		assertTime120Minutes();
 		assertTrue(this.testInstance.isNextTalkShort());
-		assertEquals("09:00AM How to install Kali in full encryted partition 60min" + SessionBase.DELIM,
+		assertEquals("01:00PM How to install Kali in full encryted partition 60min" + SessionBase.DELIM,
 				this.testInstance.getProgramDetails());
 
 		// Given the time to 45min
@@ -66,12 +66,12 @@ public class MorningSessionTest {
 		// When AddNextTalk method called
 		this.testInstance.addNextTalk(time, title);
 		// Then all attributes should updated
-		assertTrue(75 == this.testInstance.getAvailableTime());
+		assertTrue(135 == this.testInstance.getAvailableTime());
 		assertTrue(75 == this.testInstance.getMinimumTime());
 		assertTrue(this.testInstance.isNextTalkShort());
 		assertEquals(
-				"09:00AM How to install Kali in full encryted partition 60min" + SessionBase.DELIM
-						+ "10:00AM AngularJS custom directive 45min" + SessionBase.DELIM,
+				"01:00PM How to install Kali in full encryted partition 60min" + SessionBase.DELIM
+						+ "02:00PM AngularJS custom directive 45min" + SessionBase.DELIM,
 				this.testInstance.getProgramDetails());
 
 		// Given the time to 30min
@@ -80,13 +80,13 @@ public class MorningSessionTest {
 		// When AddNextTalk method called
 		this.testInstance.addNextTalk(time, title);
 		// Then all attributes should updated
-		assertTrue(45 == this.testInstance.getAvailableTime());
+		assertTrue(105 == this.testInstance.getAvailableTime());
 		assertTrue(45 == this.testInstance.getMinimumTime());
 		assertTrue(this.testInstance.isNextTalkShort());
 		assertEquals(
-				"09:00AM How to install Kali in full encryted partition 60min" + SessionBase.DELIM
-						+ "10:00AM AngularJS custom directive 45min" + SessionBase.DELIM
-						+ "10:45AM Docker ABc 30min" + SessionBase.DELIM,
+				"01:00PM How to install Kali in full encryted partition 60min" + SessionBase.DELIM
+						+ "02:00PM AngularJS custom directive 45min" + SessionBase.DELIM
+						+ "02:45PM Docker ABc 30min" + SessionBase.DELIM,
 				this.testInstance.getProgramDetails());
 	}
 
@@ -103,7 +103,7 @@ public class MorningSessionTest {
 		} catch (IllegalArgumentException e) {
 			String errorMessage = e.getMessage();
 			assertNotNull(errorMessage);
-			assertEquals("Invalid presentation time: 260, max availble time: 180", errorMessage);
+			assertEquals("Invalid presentation time: 260, max availble time: 240", errorMessage);
 		}
 		// Then all attributes should NOT be updated
 		this.assertInitialValues();
@@ -111,14 +111,14 @@ public class MorningSessionTest {
 
 	private void assertInitialValues() {
 		assertNotNull(this.testInstance);
-		assertTrue(180 == this.testInstance.getAvailableTime());
+		assertTrue(240 == this.testInstance.getAvailableTime());
 		assertTrue(180 == this.testInstance.getMinimumTime());
 		assertFalse(this.testInstance.isNextTalkShort());
 		assertEquals(Constants.Strings.EMPTY, this.testInstance.getProgramDetails());
 	}
 	
 	private void assertTime120Minutes() {
-		assertTrue(120 == this.testInstance.getAvailableTime());
+		assertTrue(180 == this.testInstance.getAvailableTime());
 		assertTrue(120 == this.testInstance.getMinimumTime());
 	}
 }

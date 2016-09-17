@@ -4,5 +4,6 @@ public interface Constants {
 
 	interface Strings {
 		public static final String EMPTY = "";
+		String SPACE = " ";
 	}
 }

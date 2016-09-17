@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class PresentationFixture {
 
@@ -110,5 +112,16 @@ public class PresentationFixture {
 		List<String> list = new ArrayList<>(getTitleList());
 		list.add("F# ABC");
 		return list;
+	}
+
+	public static SortedMap<String, List<String>> getStringTimeTitleList() {
+		Map<String, List<String>> map = new HashMap<String, List<String>>();
+		List<String> lightningList = new ArrayList<>();
+		lightningList.add("Rails for Python Developers lightning");
+		map.put("5min", lightningList);
+		List<String> thirtyList = getList();
+		thirtyList.add("A World Without HackerNews 30min");
+		map.put("30min", thirtyList);
+		return new TreeMap<>(map);
 	}
 }

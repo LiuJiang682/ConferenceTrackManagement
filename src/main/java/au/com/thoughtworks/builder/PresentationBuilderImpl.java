@@ -5,21 +5,29 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import org.apache.commons.collections4.CollectionUtils;
 
+import au.com.thoughtworks.constants.Constants;
 import au.com.thoughtworks.parser.StringParser;
 
 public class PresentationBuilderImpl implements PresentationBuilder {
 
+	private static final String MIN = "min";
 	//The minutes key will be in 1 -- 999min format.
 	private static final String REGEX_MINS_PATTERN = "^\\d{1,3}min$";
 	private static final String FIVE_MIN = "5min";
 	private static final String LIGHTNING = "lightning";
 
 	@Override
-	public SortedMap<String, List<String>> buildPresentationCategories(List<String> contents) {
+	public SortedMap<Integer, List<String>> buildPresentationCategories (List<String> contents) {
+		SortedMap<String, List<String>> timeStringCategories = doPresentationCategories(contents);
+		return doCategoriesKeyConvertion(timeStringCategories);
+	}
+
+	public SortedMap<String, List<String>> doPresentationCategories(List<String> contents) {
 		SortedMap<String, List<String>> timeCategories = new TreeMap<>();
 		
 		Map<String, List<String>> map = contents.stream()
@@ -60,5 +68,22 @@ public class PresentationBuilderImpl implements PresentationBuilder {
 		}
 		return map;
 	}
+	
+	protected SortedMap<Integer, List<String>> doCategoriesKeyConvertion(
+			SortedMap<String, List<String>> timeStringCategories) {
+		SortedMap<Integer, List<String>> timeCategories = new TreeMap<>();
+		timeStringCategories.entrySet().stream()
+			.forEach(e -> {
+				timeCategories.put(toInteger().apply(e.getKey()), 
+						e.getValue());
+			});
+		return timeCategories;
+	}
 
+	static Function<String, Integer> toInteger() {
+		return s->{
+			String time = s.replace(MIN, Constants.Strings.EMPTY);
+			return Integer.parseInt(time);
+		};
+	}
 }

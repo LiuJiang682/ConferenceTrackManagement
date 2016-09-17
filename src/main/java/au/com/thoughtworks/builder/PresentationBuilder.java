@@ -5,5 +5,5 @@ import java.util.SortedMap;
 
 public interface PresentationBuilder {
 
-	SortedMap<String, List<String>> buildPresentationCategories(final List<String> contents);
+	SortedMap<Integer, List<String>> buildPresentationCategories(final List<String> contents);
 }

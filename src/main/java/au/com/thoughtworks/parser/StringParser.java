@@ -4,9 +4,10 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 
+import au.com.thoughtworks.constants.Constants;
+
 public class StringParser {
 
-	private static final String EMPTY = "";
 	public static final String DELIM_SPACE = " ";
 	
 	private static final int ONE = 1;
@@ -59,7 +60,7 @@ public class StringParser {
 	
 	public static String lastWordOfSentence(final String string) {
 		Optional<String> result = parseLastWord(string, DELIM_SPACE);
-		String category = result.isPresent() ? result.get() : EMPTY;
+		String category = result.isPresent() ? result.get() : Constants.Strings.EMPTY;
 		return category;
 	}
 }

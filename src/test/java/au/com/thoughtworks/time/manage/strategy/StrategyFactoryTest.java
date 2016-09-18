@@ -100,6 +100,19 @@ public class StrategyFactoryTest {
 		assertTrue(36 == entry.getValue());
 	}
 	
+	@Test
+	public void when280MinutesProvidedThenEmptyEntriesShoudReturn() {
+		//Give the time length and number of occurs
+		Integer timeLength = 280;
+		Integer numberOfOccurs = 3;
+		Map<Integer, Integer> entries = new HashMap<>();
+		//When the findFittedArrangement method called
+		Map<Integer, Integer> fittedEntries = StrategyFactory.findFittedArrangement(entries, timeLength, numberOfOccurs, 180, 180);
+		//The fitted entries should return
+		assertNotNull(fittedEntries);
+		assertTrue(fittedEntries.isEmpty());
+	}
+	
 	private TreeMap<Integer, Integer> givenShortPrenstations() {
 		Map<Integer, Integer> status = PresentationFixture.getStatus();
 		TreeMap<Integer, Integer> sortedStatus = new TreeMap<>(status);

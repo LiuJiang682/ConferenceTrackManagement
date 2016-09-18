@@ -1,12 +1,10 @@
 package au.com.thoughtworks.time.manage;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -183,14 +181,13 @@ public class TimeManager {
 		//Step 2 -- Get the size of the time categories
 		Map<Integer, Integer> categoriesSize = getCategoriesSize(timeCategories);
 		
-		//Step 3 -- Get the session.
-		Session session = SessionFactory.getNextSession();
-		
 		//Start organizing the programs
 		while (count < totalPresentations) {
+			//Step 3 -- Get the session.
+			Session session = SessionFactory.getNextSession();
 			Map<Integer, Integer> status = getStatus(timeCounters, categoriesSize);
 			Strategy strategy = StrategyFactory.createStrategy(session, status);
-			strategy.execute(session, timeCounters, timeCategories);
+			programs.add(strategy.execute(session, timeCounters, timeCategories));
 			count += strategy.getOrganizedPresentations();
 		}
 		

@@ -1,13 +1,25 @@
 package au.com.thoughtworks.time.manage.strategy;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.SortedMap;
+import java.util.TreeMap;
 
+import au.com.thoughtworks.time.session.MorningSession;
 import au.com.thoughtworks.time.session.Session;
+import au.com.thoughtworks.time.session.SessionBase;
+import au.com.thoughtworks.time.session.utils.PresentationMashaller;
 
 public class StrategyImpl implements Strategy {
 
+	private static final int SHORT_TALK_TIME = 31;
+	private static final String NETWORKING = "05:00PM Networking Event";
+	private static final String LUNCH = "12:00PM Lunch";
+	
 	private Map<Integer, Integer> entries;
 	private Integer counter;
 	
@@ -21,16 +33,73 @@ public class StrategyImpl implements Strategy {
 	}
 
 	@Override
-	public void execute(Session session, Map<Integer, Integer> timeCounters,
+	public String execute(Session session, Map<Integer, Integer> timeCounters,
 			SortedMap<Integer, List<String>> timeCategories) {
-		// TODO Auto-generated method stub
 		
+		SortedMap<Integer, List<String>> presentationsInSession = new TreeMap<>();
+		//Extract the title and update the timeCounter
+		entries.entrySet().stream()
+			.forEach(e -> {
+				List<String> titlesEntries = new ArrayList<>();
+				List<String> titles = timeCategories.get(e.getKey());
+				Integer counter = timeCounters.get(e.getKey());
+				Integer currentEntries = e.getValue();
+				for (int i = 0; i < currentEntries; i++) {
+					String title = titles.get(counter);
+					titlesEntries.add(title);
+					//Move the counter forward
+					++counter;
+				}
+				//Update the time counter.
+				timeCounters.put(e.getKey(), counter);
+				presentationsInSession.put(e.getKey(), titlesEntries);
+			});
+		
+		//Construct the program
+		SortedMap<Integer, List<String>> longPresentations = new TreeMap<>(Collections.reverseOrder());
+		longPresentations.putAll(presentationsInSession.tailMap(SHORT_TALK_TIME));
+		SortedMap<Integer, List<String>> shortPresentations = new TreeMap<>(Collections.reverseOrder());
+		shortPresentations.putAll(presentationsInSession.headMap(SHORT_TALK_TIME));
+		Iterator<Entry<Integer, List<String>>> longPresentationIterator = longPresentations.entrySet().iterator();
+		Iterator<Entry<Integer, List<String>>> shortPresentationIterator = shortPresentations.entrySet().iterator();
+		List<Object[]> longPresentationList = PresentationMashaller.marshall(longPresentationIterator);
+		List<Object[]> shortPresentationList = PresentationMashaller.marshall(shortPresentationIterator);
+		int i = 0;
+		for (; i < longPresentationList.size(); i++) {
+			Object[] presentations = longPresentationList.get(i);
+			session.addNextTalk((Integer)presentations[0], (String)presentations[1]);
+			if (i < shortPresentationList.size()) {
+				Object[] shortPresentation = shortPresentationList.get(i);
+				session.addNextTalk((Integer)shortPresentation[0], (String)shortPresentation[1]);
+			}
+		}
+		if (i < shortPresentationList.size()) {
+			Object[] shortPresentation = shortPresentationList.get(i);
+			session.addNextTalk((Integer)shortPresentation[0], (String)shortPresentation[1]);
+		}
+		
+		counter += shortPresentationList.size();
+		counter += longPresentationList.size();
+		
+		StringBuilder trackPrograms = new StringBuilder(session.getProgramDetails());
+		// If the session is full or reached minimum time, stop!
+		if (session instanceof MorningSession) {
+			// Morning Session
+			trackPrograms.append(LUNCH);
+			trackPrograms.append(SessionBase.DELIM);
+		} else {
+			// Afternoon Session
+			trackPrograms.append(NETWORKING);
+			trackPrograms.append(SessionBase.DELIM);
+		}
+		
+		return trackPrograms.toString();
 	}
-
+	
+	
 	@Override
 	public Integer getOrganizedPresentations() {
-		// TODO Auto-generated method stub
-		return null;
+		return counter;
 	}
 
 }

@@ -12,7 +12,6 @@ import java.util.SortedMap;
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import au.com.thoughtworks.fixture.PresentationFixture;
@@ -55,9 +54,9 @@ public class TimeManagerTest {
 	@Test
 	public void whenPresentTimeCategoriesProvidedThenConferenceShouldBeOrganized() {
 		// Given the sorted time categories
-		SortedMap<Integer, List<String>> timeCategories = PresentationFixture.getTimeCategories();
+		SortedMap<Integer, List<String>> timeCategories = PresentationFixture.getFullTimeCategories();
 		// When the arrange method called
-		List<String> conferencePrograms = testInstance.organized(timeCategories, 18);
+		List<String> conferencePrograms = testInstance.organized(timeCategories, 19);
 		// Then the conference should be arranged
 		assertNotNull(conferencePrograms);
 		assertFalse(conferencePrograms.isEmpty());

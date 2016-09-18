@@ -3,6 +3,7 @@ package au.com.thoughtworks.fixture;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -138,6 +139,18 @@ public class PresentationFixture {
 		timeCategories.put(30, thirty);
 		return timeCategories;
 	}
+	
+	public static SortedMap<Integer, List<String>> getFullTimeCategories() {
+		TreeMap<Integer, List<String>> timeCategories = new TreeMap<>();
+		List<String> sixty = getSixtyList();
+		timeCategories.put(60, sixty);
+		List<String> fourtyFive = getFourtyFiveList();
+		timeCategories.put(45, fourtyFive);
+		List<String> thirty = getThirty();
+		timeCategories.put(30, thirty);
+		timeCategories.put(5, getFive());
+		return timeCategories;
+	}
 
 	public static List<String> getFive() {
 		return Arrays.asList("Rails for Python Developers 5min",
@@ -186,5 +199,27 @@ public class PresentationFixture {
 		status.put(30, 7);
 		status.put(5, 2);
 		return status;
+	}
+
+	public static Map<Integer, Integer> getStrategyEntries() {
+		Map<Integer, Integer> entries = new HashMap<>();
+		entries.put(60, 2);
+		entries.put(30, 2);
+		return entries;
+	}
+
+	public static Map<Integer, Integer> getTimeCounters() {
+		Map<Integer, Integer> counters = new HashMap<>();
+		counters.put(60, 0);
+		counters.put(45, 0);
+		counters.put(30, 0);
+		counters.put(5, 0);
+		return counters;
+	}
+
+	public static Iterator<Entry<Integer, List<String>>> getIterator() {
+		Map<Integer, List<String>> timeCategories = new HashMap<>();
+		timeCategories.put(5, getFive());
+		return timeCategories.entrySet().iterator();
 	}
 }

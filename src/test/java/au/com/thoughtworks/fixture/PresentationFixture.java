@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import au.com.thoughtworks.time.session.AfternoonSession;
 import au.com.thoughtworks.time.session.MorningSession;
 import au.com.thoughtworks.time.session.Session;
 
@@ -221,5 +222,9 @@ public class PresentationFixture {
 		Map<Integer, List<String>> timeCategories = new HashMap<>();
 		timeCategories.put(5, getFive());
 		return timeCategories.entrySet().iterator();
+	}
+
+	public static Session getAfternoonSession() {
+		return new AfternoonSession();
 	}
 }

@@ -9,16 +9,13 @@ import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import au.com.thoughtworks.time.session.MorningSession;
 import au.com.thoughtworks.time.session.Session;
-import au.com.thoughtworks.time.session.SessionBase;
 import au.com.thoughtworks.time.session.utils.PresentationMashaller;
+import au.com.thoughtworks.time.session.utils.SessionPrinter;
 
 public class StrategyImpl implements Strategy {
 
 	private static final int SHORT_TALK_TIME = 31;
-	private static final String NETWORKING = "05:00PM Networking Event";
-	private static final String LUNCH = "12:00PM Lunch";
 	
 	private Map<Integer, Integer> entries;
 	private Integer counter;
@@ -81,19 +78,7 @@ public class StrategyImpl implements Strategy {
 		counter += shortPresentationList.size();
 		counter += longPresentationList.size();
 		
-		StringBuilder trackPrograms = new StringBuilder(session.getProgramDetails());
-		// If the session is full or reached minimum time, stop!
-		if (session instanceof MorningSession) {
-			// Morning Session
-			trackPrograms.append(LUNCH);
-			trackPrograms.append(SessionBase.DELIM);
-		} else {
-			// Afternoon Session
-			trackPrograms.append(NETWORKING);
-			trackPrograms.append(SessionBase.DELIM);
-		}
-		
-		return trackPrograms.toString();
+		return SessionPrinter.print(session);
 	}
 	
 	

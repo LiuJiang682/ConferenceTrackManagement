@@ -38,20 +38,6 @@ public class TimeManagerTest {
 	}
 
 	@Test
-	public void whenPresentTimeCategoriesProvidedThenConferenceShouldArranged() {
-		// Given the sorted time categories
-		SortedMap<Integer, List<String>> timeCategories = PresentationFixture.getTimeCategories();
-		// When the arrange method called
-		List<String> conferencePrograms = testInstance.arrange(timeCategories, 16);
-		// Then the conference should be arranged
-		assertNotNull(conferencePrograms);
-		assertFalse(conferencePrograms.isEmpty());
-		for (String string : conferencePrograms) {
-			LOGGER.debug(string);
-		}
-	}
-
-	@Test
 	public void whenPresentTimeCategoriesProvidedThenConferenceShouldBeOrganized() {
 		// Given the sorted time categories
 		SortedMap<Integer, List<String>> timeCategories = PresentationFixture.getFullTimeCategories();

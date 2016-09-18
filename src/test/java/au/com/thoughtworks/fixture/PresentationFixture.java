@@ -9,6 +9,9 @@ import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import au.com.thoughtworks.time.session.MorningSession;
+import au.com.thoughtworks.time.session.Session;
+
 public class PresentationFixture {
 
 	public static List<String> getTitleList() {
@@ -136,6 +139,12 @@ public class PresentationFixture {
 		return timeCategories;
 	}
 
+	public static List<String> getFive() {
+		return Arrays.asList("Rails for Python Developers 5min",
+				"Perl for Python Developers 5min"
+				);
+	}
+	
 	public static List<String> getThirty() {
 		return Arrays.asList(
 				"Lua for the Masses 30min",
@@ -164,5 +173,18 @@ public class PresentationFixture {
 				"Rails Magic 60min",
 				"Ruby on Rails Legacy App Maintenance 60min"
 				);
+	}
+
+	public static Session getMorningSession() {
+		return new MorningSession();
+	}
+
+	public static Map<Integer, Integer> getStatus() {
+		Map<Integer, Integer> status = new HashMap<>();
+		status.put(60, 4);
+		status.put(45, 6);
+		status.put(30, 7);
+		status.put(5, 2);
+		return status;
 	}
 }

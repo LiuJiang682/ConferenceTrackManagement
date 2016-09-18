@@ -10,6 +10,8 @@ import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import au.com.thoughtworks.time.manage.strategy.Strategy;
+import au.com.thoughtworks.time.manage.strategy.StrategyFactory;
 import au.com.thoughtworks.time.session.MorningSession;
 import au.com.thoughtworks.time.session.Session;
 import au.com.thoughtworks.time.session.SessionBase;
@@ -170,6 +172,50 @@ public class TimeManager {
 		} while (keepGoing);
 
 		return count;
+	}
+
+	public List<String> organized(SortedMap<Integer, List<String>> timeCategories, int totalPresentations) {
+		//Step 1 -- Initial the counter
+		Map<Integer, Integer> timeCounters = getTimeCounter(timeCategories);
+		Integer count = ZERO;
+		List<String> programs = new ArrayList<>();
+		
+		//Step 2 -- Get the size of the time categories
+		Map<Integer, Integer> categoriesSize = getCategoriesSize(timeCategories);
+		
+		//Step 3 -- Get the session.
+		Session session = SessionFactory.getNextSession();
+		
+		//Start organizing the programs
+		while (count < totalPresentations) {
+			Map<Integer, Integer> status = getStatus(timeCounters, categoriesSize);
+			Strategy strategy = StrategyFactory.createStrategy(session, status);
+			strategy.execute(session, timeCounters, timeCategories);
+			count += strategy.getOrganizedPresentations();
+		}
+		
+		return programs;
+	}
+
+	protected Map<Integer, Integer> getCategoriesSize(SortedMap<Integer, List<String>> timeCategories) {
+		Map<Integer, Integer> categoriesSize = new HashMap<>();
+		timeCategories.entrySet().stream()
+			.forEach(e -> {
+				categoriesSize.put(e.getKey(), e.getValue().size());
+			});
+		return categoriesSize;
+	}
+
+	protected Map<Integer, Integer> getStatus(Map<Integer, Integer> timeCounters, Map<Integer, Integer> categoriesSize) {
+		Map<Integer, Integer> categoriesStatus = new HashMap<>();
+		timeCounters.entrySet().stream()
+			.forEach(e -> {
+				Integer size = categoriesSize.get(e.getKey());
+				Integer delta = size - e.getValue();
+				categoriesStatus.put(e.getKey(), delta);
+			});
+		
+		return categoriesStatus;
 	}
 
 }
